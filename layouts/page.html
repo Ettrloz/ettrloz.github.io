@@ -1,0 +1,13 @@
+{{ define "main" }}
+<article class="mt-4 py-10">
+  <header class="mb-6">
+    <h1 class="text-3xl font-bold tracking-tight">{{ .Title }}</h1>
+    {{ if not .Date.IsZero }}
+      <time class="mt-2 block text-sm" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+    {{ end }}
+  </header>
+  <div class="prose">
+    {{ .Content }}
+  </div>
+</article>
+{{ end }}

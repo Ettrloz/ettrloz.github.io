@@ -1,0 +1,29 @@
+{{ define "main" }}
+<section class="py-10">
+  <h1 class="text-3xl font-bold tracking-tight">{{ .Title | default "Blog" }}</h1>
+  {{ with .Content }}<div class="prose mt-3">{{ . }}</div>{{ end }}
+
+  {{ $paginator := .Paginate .RegularPages }}
+  <div class="mt-8 space-y-6">
+    {{ range $paginator.Pages }}
+      {{ partial "post-card.html" . }}
+    {{ end }}
+  </div>
+
+  {{ if gt $paginator.TotalPages 1 }}
+    <nav class="mt-10 flex items-center justify-between text-sm">
+      {{ with $paginator.Prev }}
+        <a href="{{ .URL }}" class="font-medium underline underline-offset-4">← Newer</a>
+      {{ else }}
+        <span></span>
+      {{ end }}
+      <span class="text-secondary">Page {{ $paginator.PageNumber }} of {{ $paginator.TotalPages }}</span>
+      {{ with $paginator.Next }}
+        <a href="{{ .URL }}" class="font-medium underline underline-offset-4">Older →</a>
+      {{ else }}
+        <span></span>
+      {{ end }}
+    </nav>
+  {{ end }}
+</section>
+{{ end }}

@@ -1,0 +1,6 @@
+<header class="[--scroll-gap:0rem] sticky top-[var(--scroll-gap)] z-50 w-[calc(var(--body-width)-calc(var(--scroll-gap)*2))] mx-auto bg-surface/80 backdrop-blur-md rounded-[var(--scroll-gap)] flex items-center justify-between p-4 md:rounded-b-[max(var(--scroll-gap),0.5rem)]" x-data="navbar">
+  <a href="{{ "/" | relURL }}" class="text-lg font-bold">{{ site.Title }}</a>
+  <button class="text-current bg-transparent md:hidden" aria-label="Show Navigations">
+    <i data-lucide="menu"></i>
+  </button>
+</header>

@@ -1,0 +1,10 @@
+{{ define "main" }}
+<section class="py-10">
+  <h1 class="text-3xl font-bold tracking-tight">{{ .Title }}</h1>
+  <ul class="mt-6 space-y-2">
+    {{ range .Pages }}
+      <li><a href="{{ .RelPermalink }}" class="underline underline-offset-4">{{ .Title }}</a></li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}

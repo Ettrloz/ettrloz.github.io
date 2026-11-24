@@ -1,0 +1,9 @@
+<article class="group">
+  <a href="{{ .RelPermalink }}" class="block">
+    <h2 class="text-lg font-semibold group-hover:text-accent">{{ .Title }}</h2>
+    {{ if not .Date.IsZero }}
+      <time class="text-sm text-secondary" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+    {{ end }}
+    {{ with .Summary }}<p class="mt-1 text-sm text-secondary">{{ . | plainify | truncate 160 }}</p>{{ end }}
+  </a>
+</article>

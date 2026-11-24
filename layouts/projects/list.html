@@ -1,0 +1,41 @@
+{{ define "main" }}
+<section class="py-10">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold tracking-tight text-text">{{ .Title }}</h1>
+    {{ with .Content }}<div class="prose mt-3">{{ . }}</div>{{ end }}
+  </div>
+  <div class="grid gap-4 sm:grid-cols-2">
+    {{ range sort (where site.RegularPages "Section" "projects") "Weight" }}
+      <article class="group rounded-lg border border-border bg-surface p-5 transition-colors hover:border-text/40">
+        <h2 class="font-semibold text-text transition-colors group-hover:text-accent">
+          <a href="{{ .RelPermalink }}" class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background">{{ .Title }}</a>
+        </h2>
+
+        {{ with .Description | default .Summary }}
+          <p class="mt-1 text-sm text-secondary">{{ . | plainify | truncate 120 }}</p>
+        {{ end }}
+
+        {{ with .Params.tags }}
+          <div class="mt-2 flex flex-wrap items-center gap-2">
+            {{ range . }}
+              <small class="rounded-lg border border-border bg-surface p-2 text-xs">{{ . }}</small>
+            {{ end }}
+          </div>
+        {{ end }}
+
+        <div class="mt-3 flex flex-wrap items-center gap-4 text-xs text-secondary">
+          {{ if not .Date.IsZero }}
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2006" }}</time>
+          {{ end }}
+          {{ with .Params.demo }}
+            <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="hover:text-text">Demo ↗</a>
+          {{ end }}
+          {{ with .Params.repo }}
+            <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="hover:text-text">Source ↗</a>
+          {{ end }}
+        </div>
+      </article>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="{{ site.Language.Lang }}" class="no-js h-full">
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body class="[--body-width:100%] w-full min-h-full flex flex-col items-center antialiased md:[--body-width:80%]">
+    {{ partial "layouts/header.html" . }}
+    <main class="w-[var(--body-width)] grow max-md:px-4">
+      {{ block "main" . }}{{ end }}
+    </main>
+    {{ partial "layouts/footer.html" . }}
+    <input type="checkbox" id="no-js-dismiss" class="show-no-js peer sr-only">
+    <div id="noJavascriptWarning" class="show-no-js text-background bg-danger fixed bottom-0 inset-x-[calc(50%-1rem)] -translate-x-1/2 w-[calc(var(--body-width)-calc(1rem*2))] m-4 p-4 rounded-md peer-checked:hidden">
+      <div class="flex items-center justify-between">
+        <strong>Please enable JavaScript</strong>
+        <label for="no-js-dismiss" class="cursor-pointer" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </label>
+      </div>
+      <p class="text-sm">Your browser doesn't seem to support JavaScript.</p>
+    </div>
+    {{ partial "js.html" . }}
+  </body>
+</html>

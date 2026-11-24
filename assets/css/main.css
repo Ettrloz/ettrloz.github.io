@@ -1,0 +1,89 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@plugin "@tailwindcss/typography";
+
+@source "hugo_stats.json";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --font-sans: "Open Sans", sans-serif;
+
+  --default-font-family: var(--font-sans);
+
+  --color-accent: var(--accent);
+  --color-info: var(--info);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-warn: var(--warn);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-secondary: var(--secondary);
+}
+
+:root,
+.light {
+  color-scheme: light;
+
+  --accent: var(--color-neutral-900);
+  --info: var(--color-blue-600);
+  --danger: var(--color-red-600);
+  --success: var(--color-green-600);
+  --warn: var(--color-amber-600);
+  --background: var(--color-white);
+  --surface: var(--color-neutral-50);
+  --border: var(--color-neutral-200);
+  --text: var(--color-neutral-900);
+  --secondary: var(--color-neutral-500);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not(.dark) {
+    color-scheme: dark;
+
+    --accent: var(--color-neutral-100);
+    --info: var(--color-blue-400);
+    --danger: var(--color-red-400);
+    --success: var(--color-green-400);
+    --warn: var(--color-amber-400);
+    --background: var(--color-neutral-950);
+    --surface: var(--color-neutral-900);
+    --border: var(--color-neutral-800);
+    --text: var(--color-neutral-100);
+    --secondary: var(--color-neutral-400);
+  }
+}
+
+.dark {
+  color-scheme: dark;
+
+  --accent: var(--color-neutral-100);
+  --info: var(--color-blue-400);
+  --danger: var(--color-red-400);
+  --success: var(--color-green-400);
+  --warn: var(--color-amber-400);
+  --background: var(--color-neutral-950);
+  --surface: var(--color-neutral-900);
+  --border: var(--color-neutral-800);
+  --text: var(--color-neutral-100);
+  --secondary: var(--color-neutral-400);
+}
+
+[x-cloak] {
+  display: none !important;
+}
+
+html:not(.no-js) .show-no-js {
+  display: none !important;
+}
+
+@layer base {
+  body {
+    color: var(--text);
+    background-color: var(--background);
+  }
+}

@@ -1,0 +1,89 @@
+{{ define "main" }}
+  <section class="w-full min-h-[calc(100dvh-3.75rem)] flex flex-col">
+    <div class="w-full text-center mt-auto mb-auto">
+      <h1 class="text-5xl font-bold tracking-tight sm:text-7xl">Ettrloz</h1>
+      <p class="mt-4 text-base text-secondary sm:text-lg">A Full Stack Web Developer</p>
+    </div>
+
+    <div class="mb-4 p-4 text-secondary text-center self-center">
+      <small><i class="inline align-middle mr-2" data-lucide="construction" width="16px" height="16px"></i>This project is under construction</small>
+    </div>
+  </section>
+
+  <section class="py-12">
+    <div class="mb-6 flex items-end justify-between gap-4">
+      <div>
+        <h2 class="text-2xl font-semibold tracking-tight text-text">Featured Projects</h2>
+        <p class="mt-1 text-sm text-secondary">A best projects I build</p>
+      </div>
+      <a href="{{ "/projects" | relURL }}" class="shrink-0 text-sm text-secondary hover:text-text">View all <i class="inline align-middle" width="16px" height="16px" data-lucide="chevron-right"></i></a>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      {{ $projects := where site.RegularPages "Section" "projects" }}
+      {{ $featured := sort (where $projects "Params.featured" true) "Weight" }}
+
+      {{ if $featured }}
+        {{ range $featured }}
+          <article class="group rounded-lg border border-border bg-surface p-5 transition-colors hover:border-text/40">
+            <h3 class="font-semibold text-text transition-colors group-hover:text-accent">
+              <a href="{{ .RelPermalink }}" class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background">{{ .Title }}</a>
+            </h3>
+
+            {{ with .Description | default .Summary }}
+              <p class="mt-1 text-sm text-secondary">{{ . | plainify | truncate 120 }}</p>
+            {{ end }}
+
+            {{ with .Params.tags }}
+              <div class="mt-2 flex flex-wrap items-center gap-2">
+                {{ range . }}
+                  <small class="rounded-lg border border-border bg-surface p-2 text-xs">{{ . }}</small>
+                {{ end }}
+              </div>
+            {{ end }}
+
+            <div class="mt-3 flex flex-wrap items-center gap-4 text-xs text-secondary">
+              {{ if not .Date.IsZero }}
+                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2006" }}</time>
+              {{ end }}
+              {{ with .Params.demo }}
+                <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="hover:text-text">Demo ↗</a>
+              {{ end }}
+              {{ with .Params.repo }}
+                <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="hover:text-text">Source ↗</a>
+              {{ end }}
+            </div>
+          </article>
+        {{ end }}
+      {{ else }}
+        <p class="text-sm text-secondary">No featured projects yet.</p>
+      {{ end }}
+    </div>
+  </section>
+
+  {{ $posts := sort (where site.RegularPages "Section" "blog") "Date" "desc" }}
+  {{ with $posts }}
+    <section class="py-12">
+      <div class="mb-6 flex items-end justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-semibold tracking-tight text-text">Recent posts</h2>
+          <p class="mt-1 text-sm text-secondary">Notes on web development and tooling.</p>
+        </div>
+        <a href="{{ "/blog" | relURL }}" class="shrink-0 text-sm text-secondary hover:text-text">View all <i class="inline align-middle" width="16px" height="16px" data-lucide="chevron-right"></i></a>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {{ range first 2 . }}
+          {{ partial "post-card.html" . }}
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+
+  <section class="rounded-lg border border-border bg-surface my-12 p-6 text-center">
+    <div class="mx-auto flex max-w-xl flex-col items-center gap-2">
+      <h2 class="text-lg font-semibold tracking-tight text-text">Let's build together</h2>
+      <p class="text-sm text-secondary">Have an idea you'd like to share? I'm open to hearing it.</p>
+      <a href="https://github.com/ettrloz" class="mt-3 inline-flex items-center justify-center rounded-md bg-accent px-4 py-2 text-sm font-medium text-background transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background">Contact me</a>
+    </div>
+  </section>
+{{ end }}

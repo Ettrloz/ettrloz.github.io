@@ -1,0 +1,146 @@
+{{- $title := cond .IsHome site.Title (printf "%s · %s" .Title site.Title) -}}
+{{- $desc  := or .Description .Summary site.Params.description | plainify | truncate 160 "" -}}
+
+{{- $canonical := .Permalink -}}
+{{- if in (slice "home" "section" "taxonomy" "term") .Kind -}}
+  {{- with .Paginator -}}
+    {{- if gt .PageNumber 1 -}}
+      {{- $canonical = .URL | absURL -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $desc }}">
+
+{{ with site.Params.author }}
+  <meta name="author" content="{{ . }}">
+{{ end }}
+
+<link rel="canonical" href="{{ $canonical }}">
+
+{{ if or (eq .Kind "404") .Params.noindex }}
+  <meta name="robots" content="noindex, nofollow">
+{{ else }}
+  <meta name="robots" content="index, follow, max-image-preview:large">
+{{ end }}
+
+<link rel="alternate" hreflang="{{ site.Language.Lang }}" href="{{ $canonical }}">
+<link rel="alternate" hreflang="x-default" href="{{ $canonical }}">
+
+{{ with .OutputFormats.Get "rss" -}}
+  <link rel="alternate" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ site.Title }}">
+{{ end }}
+
+<link rel="icon" href="{{ "favicon.ico" | absURL }}" sizes="any">
+<link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | absURL }}">
+<link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | absURL }}">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#25242b" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="{{ if and .IsPage (or (eq .Type "blog") (eq .Type "projects")) }}article{{ else }}website{{ end }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:url" content="{{ $canonical }}">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:locale" content="{{ site.Params.ogLocale }}">
+
+{{- if .IsPage }}
+  {{- with .PublishDate }}
+    <meta property="article:published_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}">
+  {{ end }}
+
+  {{- with .Lastmod }}
+    <meta property="article:modified_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}">
+  {{ end }}
+
+  {{- with (.Params.author | default site.Params.author) }}
+    <meta property="article:author" content="{{ . }}">
+  {{ end }}
+
+  {{- with .Params.tags }}
+    {{ range . }}
+      <meta property="article:tag" content="{{ . }}">
+    {{ end }}
+  {{ end }}
+{{- end }}
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $desc }}">
+
+{{ with site.Params.twitterHandle }}
+  <meta name="twitter:site" content="{{ . }}">
+  <meta name="twitter:creator" content="{{ . }}">
+{{ end }}
+
+{{ partial "jsonld.html" . }}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+{{ with (templates.Defer (dict "key" "global")) }}
+  {{ partial "css.html" . }}
+{{ end }}
+
+{{ if hugo.IsDevelopment }}
+  <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+  <script>
+    if (window.eruda && !window.eruda._isInit) {
+      eruda.init();
+    }
+  </script>
+{{ end }}
+
+<script id="javascript-check">
+  document.documentElement.classList.remove('no-js')
+</script>
+
+<script id="theme-watcher">
+  ((_1, _2, _3) => {
+    let a, c, x = 'auto', y = 'light', z = 'dark', k = 'theme',
+      d = _2.documentElement, h = d.classList,
+      m = _1.matchMedia('(prefers-color-scheme: dark)'),
+      t = () => m.matches ? z : y,
+      g = () => _1.localStorage.getItem(k),
+      s = v => _1.localStorage.setItem(k, v),
+      w = (r, n) => (h.remove(r), h.add(n)),
+      l = g(),
+      p = v => d.style.colorScheme = !/light|dark/.test(v) ? [y, z].join(' ') : v,
+      r = v => v === x ? t() : v
+    l = /^(auto|light|dark)$/.test(l) ? l : x,
+    _1[_3] = c = v => (
+      v = /^(auto|light|dark)$/.test(v) ? v : x,
+      l = v, a = r(v), w(a === z ? y : z, a), s(v), p(v)
+    ),
+    c(l) && m.addEventListener('change', () => l === x && c(l))
+  })(window, document, '__switchTheme')
+</script>
+
+<script type="module" src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@latest/dist/turbo.es2017-esm.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.1/dist/gsap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.1/dist/ScrollTrigger.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/anchor@3.17.5/dist/cdn.min.js"></script>
+
+{{ with resources.Get "js/navbar.ts" }}
+  {{ $opts := dict
+    "minify" (not hugo.IsDevelopment)
+    "sourceMap" (cond hugo.IsDevelopment "linked" "none")
+  }}
+  {{ with . | js.Build $opts }}
+    {{ if hugo.IsDevelopment }}
+      <script src="{{ .RelPermalink }}" defer></script>
+    {{ else }}
+      {{ with . | fingerprint }}
+        <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.5/dist/cdn.min.js"></script>
