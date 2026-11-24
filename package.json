@@ -1,6 +1,9 @@
 {
   "private": true,
   "name": "ettrloz.github.io",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "typecheck": "tsc --noEmit"
   },
