@@ -13,34 +13,121 @@ pagination:
 
 params:
   author: Ettrloz
-  description: Full Stack Web Developer
-  twitterHandle: "@ettrloz"
+  description: A Full Stack Web Developer
+  twitterHandle: '@ettrloz'
   ogLocale: en_US
   social:
     - https://github.com/ettrloz
     - https://twitter.com/ettrloz
+  socialLinks:
+    - name: Email
+      type: lucide
+      icon: mail
+      url: mailto://ettrloz@gmail.com
+    - name: Github
+      icon: github
+      url: https://github.com/Ettrloz
+    - name: Instagram
+      icon: instagram
+      url: https://instagram.com/Ettrloz
+    - name: Facebook
+      icon: facebook
+      url: https://facebook.com/Ettrloz
+  techStack:
+    - name: HTML5
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/html5/html5-original.svg
+    - name: CSS3
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/css3/css3-original.svg
+    - name: Sass
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/sass/sass-original.svg
+    - name: Tailwind CSS
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/tailwindcss/tailwindcss-original.svg
+    - name: JavaScript
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/javascript/javascript-original.svg
+    - name: TypeScript
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/typescript/typescript-original.svg
+    - name: Python
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/python/python-original.svg
+    - name: React
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/react/react-original.svg
+    - name: Vue
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/vuejs/vuejs-original.svg
+    - name: Svelte
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/svelte/svelte-original.svg
+    - name: Redux
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/redux/redux-original.svg
+    - name: GSAP
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/gsap/gsap-original.svg
+    - name: Motion
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/motion/motion-original.svg
+    - name: Next.js
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/nextjs/nextjs-original.svg
+    - name: React Router
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/reactrouter/reactrouter-original.svg
+    - name: Vite
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/vitejs/vitejs-original.svg
+    - name: Express
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/express/express-original.svg
+    - name: Fastify
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/fastify/fastify-original.svg
+    - name: JWT
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/jwt/jwt-original.svg
+    - name: Passport
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/passport/passport-original.svg
+    - name: TypeORM
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/typeorm/typeorm-plain.svg
+    - name: Drizzle
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/drizzle/drizzle-plain.svg
+    - name: GraphQL
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/graphql/graphql-plain.svg
+    - name: NestJS
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/nestjs/nestjs-original.svg
+    - name: Hugo
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/hugo/hugo-original.svg
+    - name: MySQL
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/mysql/mysql-original.svg
+    - name: PostgreSQL
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/postgresql/postgresql-original.svg
+    - name: Neon
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/neon/neon-original.svg
+    - name: npm
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/npm/npm-original.svg
+    - name: pnpm
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/pnpm/pnpm-original.svg
+    - name: Turborepo
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/turborepo/turborepo-original.svg
+    - name: Prettier
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/prettier/prettier-original.svg
+    - name: Oxc
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/oxc/oxc-original.svg
+    - name: GitHub
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/github/github-original.svg
+    - name: Git
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/git/git-original.svg
+    - name: VS Code
+      url: https://cdn.jsdelivr.net/gh/pawang-ai/tech-stack-icons@main/icons/vscode/vscode-original.svg
 
 build:
   buildStats:
     enable: true
   cachebusters:
-  - source: 'assets/notwatching/hugo_stats\.json'
-    target: css
+    - source: 'assets/notwatching/hugo_stats\.json'
+      target: css
 
 module:
   mounts:
-  - source: assets
-    target: assets
-  - disableWatch: true
-    source: hugo_stats.json
-    target: assets/notwatching/hugo_stats.json
+    - source: assets
+      target: assets
+    - disableWatch: true
+      source: hugo_stats.json
+      target: assets/notwatching/hugo_stats.json
 
 security:
   exec:
     allow:
-    - ^(dart-)?sass$
-    - ^go$
-    - ^git$
-    - ^node$
-    - ^postcss$
-    - ^tailwindcss$
+      - ^(dart-)?sass$
+      - ^go$
+      - ^git$
+      - ^node$
+      - ^postcss$
+      - ^tailwindcss$

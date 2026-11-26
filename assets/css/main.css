@@ -5,6 +5,7 @@
 @plugin "@tailwindcss/typography";
 
 @source "hugo_stats.json";
+@source inline("grayscale", "grayscale-0", "scale-150");
 
 @custom-variant dark (&:where(.dark, .dark *));
 

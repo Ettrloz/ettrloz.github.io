@@ -1,75 +1,204 @@
 {{ define "main" }}
-  <section class="w-full min-h-[calc(100dvh-3.75rem)] flex flex-col">
-    <div class="w-full text-center mt-auto mb-auto">
+  <section id="hero" class="flex min-h-[calc(100dvh-3.75rem)] w-full flex-col">
+    <div id="hero-headline" class="my-auto w-full text-center">
       <h1 class="text-5xl font-bold tracking-tight sm:text-7xl">Ettrloz</h1>
-      <p class="mt-4 text-base text-secondary sm:text-lg">A Full Stack Web Developer</p>
+      <p class="text-secondary mt-4 text-base sm:text-lg">A Full Stack Web Developer</p>
     </div>
 
-    <div class="mb-4 p-4 text-secondary text-center self-center">
-      <small><i class="inline align-middle mr-2" data-lucide="construction" width="16px" height="16px"></i>This project is under construction</small>
+    <div class="text-secondary mb-4 self-center p-4 text-center">
+      <small>
+        <i
+          class="mr-2 inline align-middle"
+          data-lucide="construction"
+          width="16"
+          height="16"
+          aria-hidden="true"
+        ></i>
+        This project is under construction
+      </small>
     </div>
   </section>
 
-  <section class="py-12">
+  {{- with site.Params.techStack }}
+    <section
+      id="tech-stack"
+      x-data="techStack"
+      class="w-full min-w-0 overflow-hidden py-8"
+      style="
+      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      contain: layout style paint;
+    "
+    >
+      <ul x-ref="track" class="flex h-auto w-max items-center gap-4 py-3 will-change-transform">
+        <li class="flex shrink-0 items-center gap-4">
+          <ul class="flex items-center gap-4">
+            {{- range . }}
+              <li
+                class="shrink-0 cursor-pointer"
+                x-data="{ isClicked: false }"
+                data-tippy-content="{{ .name }}"
+                @mouseenter="pause()"
+                @mouseleave="resume()"
+                @click="isClicked = !isClicked"
+                @click.outside="isClicked = false"
+              >
+                <img
+                  src="{{ .url }}"
+                  alt="{{ .name }}"
+                  width="24"
+                  height="24"
+                  loading="eager"
+                  decoding="async"
+                  class="size-6 shrink-0 grayscale transition-all duration-200 ease-out hover:scale-150 hover:grayscale-0"
+                  :class="isClicked ? 'grayscale-0 scale-150' : ''"
+                />
+              </li>
+            {{- end }}
+          </ul>
+        </li>
+      </ul>
+    </section>
+  {{- end }}
+
+
+  <section id="about" class="py-12">
+    <h2 class="text-text text-2xl font-semibold tracking-tight">About Me</h2>
+    <p class="text-secondary mt-3 max-w-2xl text-base">
+      I am a full-stack web developer passionate about building performant and engaging digital
+      experiences. I enjoy crafting cool projects while continuously learning new technologies.
+      Currently, I am focused on JavaScript-based ecosystems, with a strong emphasis on application
+      speed, performance, and interactive web-based experience.
+    </p>
+
+    <div class="mt-6 grid gap-4 sm:grid-cols-3">
+      <div class="border-border bg-surface rounded-lg border p-5">
+        <div class="flex items-center gap-2">
+          <i data-lucide="graduation-cap" width="24px" height="24px"></i>
+          <h3 class="text-text text-sm font-semibold">Where I Started</h3>
+        </div>
+        <p class="text-secondary mt-2 text-sm">
+          I'm a software development student with an interest in building with application and
+          exploring how technology works.
+        </p>
+      </div>
+      <div class="border-border bg-surface rounded-lg border p-5">
+        <div class="flex items-center gap-2">
+          <i data-lucide="briefcase" width="24px" height="24px"></i>
+          <h3 class="text-text text-sm font-semibold">What I've Done</h3>
+        </div>
+        <p class="text-secondary mt-2 text-sm">
+          Gained practicale experience through projects, independent experiments and an internship
+          at Hexa.
+        </p>
+      </div>
+      <div class="border-border bg-surface rounded-lg border p-5">
+        <div class="flex items-center gap-2">
+          <i data-lucide="brain" width="24px" height="24px"></i>
+          <h3 class="text-text text-sm font-semibold">How I Approarch Things</h3>
+        </div>
+        <p class="text-secondary mt-2 text-sm">
+          I believe in keeping things simple, understanding problem deeply and continuously
+          improving through iterative experimentation and clean, maintainable code.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="py-12">
     <div class="mb-6 flex items-end justify-between gap-4">
       <div>
-        <h2 class="text-2xl font-semibold tracking-tight text-text">Featured Projects</h2>
-        <p class="mt-1 text-sm text-secondary">A best projects I build</p>
+        <h2 class="text-text text-2xl font-semibold tracking-tight">Featured Projects</h2>
+        <p class="text-secondary mt-1 text-sm">The best projects I've built</p>
       </div>
-      <a href="{{ "/projects" | relURL }}" class="shrink-0 text-sm text-secondary hover:text-text">View all <i class="inline align-middle" width="16px" height="16px" data-lucide="chevron-right"></i></a>
+      <a href="{{ "/projects" | relURL }}" class="text-secondary hover:text-text shrink-0 text-sm">
+        View all
+        <i
+          class="inline align-middle"
+          data-lucide="chevron-right"
+          width="16"
+          height="16"
+          aria-hidden="true"
+        ></i>
+      </a>
     </div>
 
-    <div class="grid gap-4 sm:grid-cols-2">
-      {{ $projects := where site.RegularPages "Section" "projects" }}
-      {{ $featured := sort (where $projects "Params.featured" true) "Weight" }}
+    {{ $projects := where site.RegularPages "Section" "projects" }}
+    {{ $featured := sort (where $projects "Params.featured" true) "Weight" }}
 
-      {{ if $featured }}
-        {{ range $featured }}
-          <article class="group rounded-lg border border-border bg-surface p-5 transition-colors hover:border-text/40">
-            <h3 class="font-semibold text-text transition-colors group-hover:text-accent">
-              <a href="{{ .RelPermalink }}" class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background">{{ .Title }}</a>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      {{ with $featured }}
+        {{ range . }}
+          <article
+            class="group border-border bg-surface hover:border-text/40 rounded-lg border p-5 transition-colors"
+          >
+            <h3 class="text-text font-semibold">
+              <a
+                href="{{ .RelPermalink }}"
+                class="focus-visible:ring-secondary focus-visible:ring-offset-background group-hover:underline group-hover:underline-offset-4 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                >{{ .Title }}</a
+              >
             </h3>
 
             {{ with .Description | default .Summary }}
-              <p class="mt-1 text-sm text-secondary">{{ . | plainify | truncate 120 }}</p>
+              <p class="text-secondary mt-1 text-sm">{{ . | plainify | truncate 120 }}</p>
             {{ end }}
 
             {{ with .Params.tags }}
-              <div class="mt-2 flex flex-wrap items-center gap-2">
+              <div class="mt-3 flex flex-wrap items-center gap-2">
                 {{ range . }}
-                  <small class="rounded-lg border border-border bg-surface p-2 text-xs">{{ . }}</small>
+                  <small class="border-border text-secondary rounded-md border px-2 py-0.5 text-xs"
+                    >{{ . }}</small
+                  >
                 {{ end }}
               </div>
             {{ end }}
 
-            <div class="mt-3 flex flex-wrap items-center gap-4 text-xs text-secondary">
+
+            <div class="text-secondary mt-3 flex flex-wrap items-center gap-4 text-xs">
               {{ if not .Date.IsZero }}
-                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2006" }}</time>
+                <time datetime="{{ .Date.Format "2006-01-02" }}"
+                  >{{ .Date.Format "Jan 2006" }}</time
+                >
               {{ end }}
               {{ with .Params.demo }}
-                <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="hover:text-text">Demo ↗</a>
+                <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="hover:text-text"
+                  >Demo ↗</a
+                >
               {{ end }}
               {{ with .Params.repo }}
-                <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="hover:text-text">Source ↗</a>
+                <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="hover:text-text"
+                  >Source ↗</a
+                >
               {{ end }}
             </div>
           </article>
         {{ end }}
       {{ else }}
-        <p class="text-sm text-secondary">No featured projects yet.</p>
+        <p class="text-secondary text-sm">No featured projects yet.</p>
       {{ end }}
     </div>
   </section>
 
   {{ $posts := sort (where site.RegularPages "Section" "blog") "Date" "desc" }}
   {{ with $posts }}
-    <section class="py-12">
+    <section id="blog" class="py-12">
       <div class="mb-6 flex items-end justify-between gap-4">
         <div>
-          <h2 class="text-2xl font-semibold tracking-tight text-text">Recent posts</h2>
-          <p class="mt-1 text-sm text-secondary">Notes on web development and tooling.</p>
+          <h2 class="text-text text-2xl font-semibold tracking-tight">Recent posts</h2>
+          <p class="text-secondary mt-1 text-sm">Notes on web development and tooling.</p>
         </div>
-        <a href="{{ "/blog" | relURL }}" class="shrink-0 text-sm text-secondary hover:text-text">View all <i class="inline align-middle" width="16px" height="16px" data-lucide="chevron-right"></i></a>
+        <a href="{{ "/blog" | relURL }}" class="text-secondary hover:text-text shrink-0 text-sm">
+          View all
+          <i
+            class="inline align-middle"
+            data-lucide="chevron-right"
+            width="16"
+            height="16"
+            aria-hidden="true"
+          ></i>
+        </a>
       </div>
       <div class="grid gap-4 sm:grid-cols-2">
         {{ range first 2 . }}
@@ -79,11 +208,18 @@
     </section>
   {{ end }}
 
-  <section class="rounded-lg border border-border bg-surface my-12 p-6 text-center">
+
+  <section id="contact" class="border-border bg-surface my-12 rounded-lg border p-6 text-center">
     <div class="mx-auto flex max-w-xl flex-col items-center gap-2">
-      <h2 class="text-lg font-semibold tracking-tight text-text">Let's build together</h2>
-      <p class="text-sm text-secondary">Have an idea you'd like to share? I'm open to hearing it.</p>
-      <a href="https://github.com/ettrloz" class="mt-3 inline-flex items-center justify-center rounded-md bg-accent px-4 py-2 text-sm font-medium text-background transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background">Contact me</a>
+      <h2 class="text-text text-lg font-semibold tracking-tight">Let's build together</h2>
+      <p class="text-secondary text-sm">
+        Have an idea you'd like to share? I'm open to hearing it.
+      </p>
+      <a
+        href="https://github.com/ettrloz"
+        class="bg-text text-background hover:bg-text/90 focus-visible:ring-secondary focus-visible:ring-offset-background mt-3 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+        >Contact me</a
+      >
     </div>
   </section>
 {{ end }}

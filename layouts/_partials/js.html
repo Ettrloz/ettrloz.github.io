@@ -1,9 +1,23 @@
 {{ if hugo.IsDevelopment }}
+  <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+  <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+{{ else }}
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+{{ end }}
+
+
+<script id="tippy-init">
+  tippy('[data-tippy-content]');
+</script>
+
+{{ if hugo.IsDevelopment }}
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 {{ else }}
   <script src="https://unpkg.com/lucide@latest"></script>
 {{ end }}
 
-<script>lucide.createIcons()</script>
 
-
+<script id="lucide-init">
+  lucide.createIcons();
+</script>

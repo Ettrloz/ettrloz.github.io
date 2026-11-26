@@ -1,7 +1,7 @@
 ---
 slug: ettrloz.github.io
 title: ettrloz.github.io
-description: A minimal personal site built with Hugo, Tailwind CSS, and a little TypeScript.
+description: My first portfolio built with Hugo
 date: 2026-11-24
 weight: 10
 featured: true
@@ -13,6 +13,4 @@ tags:
   - TypeScript
 ---
 
-A fast, accessible personal site with a neutral design.
-
-Built with Hugo, Tailwind CSS, and a little TypeScript. The layout stays intentionally small: a hero, selected work, recent posts, and a simple call to action.
+A fast and easily accessible personal portfolio, built using Hugo and styled with Tailwind CSS, with a little bit of TypeScript. All external libraries are loaded via CDN to improve loading performance.

@@ -1,5 +1,20 @@
-<footer class="border-t border-border py-6 w-full text-sm text-secondary">
-  <div class="mx-auto max-w-3xl px-4">
-    <p>&copy; {{ now.Year }} {{ site.Title }}. All rights reserved.</p>
+<footer class="border-border bg-secondary w-full border-t p-4 py-6 text-sm text-white">
+  <div class="flex items-center justify-between">
+    <small>Copyright (c) {{ now.Year }} {{ site.Title }}. All right reserved</small>
+    {{- with site.Params.socialLinks }}
+      <ul class="flex items-center gap-4">
+        {{- range . }}
+          <li>
+            <a class="text-sm" href="{{ .url }}" aria-label="{{ .name }}">
+              {{ if eq .type "lucide" }}
+                <i data-lucide="{{ .icon }}" width="16px" height="16px"></i>
+              {{ else }}
+                <i class="fa fa-brands fa-{{ .icon }}"></i>
+              {{ end }}
+            </a>
+          </li>
+        {{ end }}
+      </ul>
+    {{- end }}
   </div>
 </footer>
